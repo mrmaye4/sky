@@ -4,6 +4,7 @@ import ListIcon from "@/components/tabbar/icons/ListIcon";
 import TrapezoidBackground from "@/components/tabbar/elements/TrapezoidBackground";
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 import CircleButton from "@/components/tabbar/elements/CircleButton";
+import { useRouter } from "expo-router";
 
 export default function TabBarItems() {
   const { width, height } = useApplicationDimensions();
@@ -11,6 +12,7 @@ export default function TabBarItems() {
   const trapezoidHeight = height * 0.12;
   const circleRadius = (trapezoidHeight * 0.51) / 2;
   const buttonCenterX = width / 2 - circleRadius;
+  const router = useRouter();
 
   return (
     <View
@@ -39,7 +41,9 @@ export default function TabBarItems() {
           <CircleButton radius={circleRadius} pressed={pressed} />
         )}
       </Pressable>
-      <ListIcon />
+      <Pressable onPress={() => router.push("/weather")}>
+        <ListIcon />
+      </Pressable>
     </View>
   );
 }
