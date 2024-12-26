@@ -5,6 +5,7 @@ import TrapezoidBackground from "@/components/tabbar/elements/TrapezoidBackgroun
 import useApplicationDimensions from "@/hooks/useApplicationDimensions";
 import CircleButton from "@/components/tabbar/elements/CircleButton";
 import { useRouter } from "expo-router";
+import { eventEmitter } from "@/utils/EventEmitter";
 
 export default function TabBarItems() {
   const { width, height } = useApplicationDimensions();
@@ -25,7 +26,9 @@ export default function TabBarItems() {
         paddingHorizontal: 32,
       }}
     >
-      <MapIcon />
+      <Pressable onPress={() => eventEmitter.emit("locationEvent")}>
+        <MapIcon />
+      </Pressable>
       <TrapezoidBackground width={trapezoidWidth} height={trapezoidHeight} />
       <Pressable
         style={{

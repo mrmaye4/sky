@@ -1,10 +1,11 @@
-import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import React, { useCallback } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { WeatherDataProvider } from "@/context/WeatherDataContext";
+import NavigationLayout from "@/components/NavigationLayout";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,13 +28,12 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="weather" />
-        </Stack>
-        <StatusBar style={"light"} />
-      </GestureHandlerRootView>
+      <WeatherDataProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <NavigationLayout />
+          <StatusBar style={"light"} />
+        </GestureHandlerRootView>
+      </WeatherDataProvider>
     </SafeAreaProvider>
   );
 }

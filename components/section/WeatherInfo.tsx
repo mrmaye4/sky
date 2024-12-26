@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { Weather } from "@/models/Weather";
 import { DEGREE_SYMBOL } from "@/utils/Constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
@@ -9,13 +8,13 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
+import { useWeatherData } from "@/context/WeatherDataContext";
 
-interface Props {
-  weather: Weather;
-}
-
-export default function WeatherInfo({ weather }: Props) {
-  const { city, temperature, condition, high, low } = weather;
+export default function WeatherInfo() {
+  const { weatherData } = useWeatherData();
+  const {
+    currentWeather: { city, temperature, condition, high, low },
+  } = weatherData;
   const { top } = useSafeAreaInsets();
   const topMargin = 51;
   const weatherInfoMargin = top + topMargin;

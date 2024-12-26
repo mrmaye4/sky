@@ -6,7 +6,6 @@ import Separator from "@/components/sheet/elements/Separator";
 import ForecastScroll from "@/components/forecast/ForecastScroll";
 import { useEffect, useState } from "react";
 import { ForecastType } from "@/models/Weather";
-import { hourly, weekly } from "@/data/ForecastData";
 import { ScrollView, View } from "react-native";
 import AirQualityWidget from "@/components/forecast/widgets/AirQualityWidget";
 import UvIndexWidget from "@/components/forecast/widgets/UvIndexWidget";
@@ -23,10 +22,13 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useForecastSheetPosition } from "@/context/ForecastSheetContext";
+import { useWeatherData } from "@/context/WeatherDataContext";
 
 export default function ForecastSheet() {
   const { width, height } = useApplicationDimensions();
-
+  const {
+    weatherData: { hourlyForecast, weeklyForecast },
+  } = useWeatherData();
   const [selectedForecastType, setSelectedForecastType] =
     useState<ForecastType>(ForecastType.Hourly);
   const smallWidgetSize = width / 2 - 20;
@@ -106,7 +108,7 @@ export default function ForecastSheet() {
         <View style={{ flexDirection: "row" }}>
           <Animated.View style={[animatedHourlyStyles]}>
             <ForecastScroll
-              forecasts={hourly}
+              forecasts={hourlyForecast}
               capsuleWidth={capsuleWidth}
               capsuleHeight={capsuleHeight}
               capsuleRadius={capsuleRadius}
@@ -114,7 +116,7 @@ export default function ForecastSheet() {
           </Animated.View>
           <Animated.View style={[animatedWeeklyStyles]}>
             <ForecastScroll
-              forecasts={weekly}
+              forecasts={weeklyForecast}
               capsuleWidth={capsuleWidth}
               capsuleHeight={capsuleHeight}
               capsuleRadius={capsuleRadius}
